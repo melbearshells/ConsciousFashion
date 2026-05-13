@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RE:WEAR Campaign</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      background: #ffffff;
+      color: #111111;
+      line-height: 1.45;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button {
+      border: none;
+      background: none;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #ececec;
+    }
+
+    .header-inner {
+      width: min(1400px, calc(100% - 40px));
+      margin: 0 auto;
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      flex-shrink: 0;
+    }
+
+    .header-nav {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .header-nav a {
+      font-size: 13px;
+      color: #444;
+    }
+
+    .header-cart-button {
+      min-width: 34px;
+      height: 34px;
+      padding: 0 10px;
+      border-radius: 999px;
+      background: #111;
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .page-shell {
+      width: min(1400px, calc(100% - 40px));
+      margin: 24px auto 70px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 12px;
+      margin-bottom: 64px;
+    }
+
+    .hero-media {
+      aspect-ratio: 1.45 / 1;
+      overflow: hidden;
+      background: #f2f2f2;
+    }
+
+    .hero-media img {
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-copy {
+      background: #f7f4ef;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .hero-kicker {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: #666;
+      margin-bottom: 14px;
+    }
+
+    .hero-copy h2 {
+      font-size: clamp(28px, 4vw, 48px);
+      line-height: 1.08;
+      font-weight: 600;
+      letter-spacing: -0.04em;
+      margin-bottom: 16px;
+    }
+
+    .hero-text {
+      font-size: 14px;
+      color: #555;
+      max-width: 360px;
+      margin-bottom: 24px;
+    }
+
+    .hero-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .hero-links a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 38px;
+      padding: 0 14px;
+      border: 1px solid #d8d2c9;
+      border-radius: 999px;
+      font-size: 12px;
+      color: #333;
+      background: rgba(255, 255, 255, 0.65);
+    }
+
+    .content-section {
+      margin-bottom: 72px;
+      scroll-margin-top: 84px;
+    }
+
+    .section-heading {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 20px;
+      padding-top: 14px;
+      border-top: 1px solid #ececec;
+      margin-bottom: 18px;
+    }
+
+    .section-label {
+      font-size: 12px;
+      color: #666;
+    }
+
+    .section-title-block h3 {
+      font-size: clamp(22px, 3vw, 34px);
+      font-weight: 600;
+      letter-spacing: -0.04em;
+      margin-bottom: 10px;
+    }
+
+    .section-title-block p {
+      max-width: 780px;
+      font-size: 15px;
+      color: #555;
+    }
+
+    .campaign-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .campaign-card {
+      background: #f7f4ef;
+      padding: 20px;
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .campaign-card-number {
+      font-size: 12px;
+      color: #777;
+      margin-bottom: 18px;
+    }
+
+    .campaign-card h4 {
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      margin-bottom: 10px;
+    }
+
+    .campaign-card p {
+      font-size: 14px;
+      color: #555;
+      max-width: 320px;
+    }
+
+    .warning-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .warning-visual,
+    .warning-copy {
+      min-height: 420px;
+    }
+
+    .warning-visual {
+      overflow: hidden;
+      background: #efefef;
+    }
+
+    .warning-visual img {
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(0.9);
+    }
+
+    .warning-copy {
+      background: #111;
+      color: #fff;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .warning-copy-top p {
+      max-width: 480px;
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 15px;
+      margin-bottom: 14px;
+    }
+
+    .warning-copy-top h4 {
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .warning-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .warning-stat {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 16px;
+      min-height: 120px;
+    }
+
+    .warning-stat strong {
+      display: block;
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      letter-spacing: -0.04em;
+    }
+
+    .warning-stat span {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.74);
+    }
+
+    .story-section {
+      height: 240vh;
+      background: #111;
+      position: relative;
+      margin-bottom: 72px;
+    }
+
+    .story-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 8vw;
+    }
+
+    .story-text {
+      max-width: 980px;
+      font-size: clamp(30px, 4.5vw, 62px);
+      line-height: 1.24;
+      letter-spacing: -0.05em;
+      font-weight: 600;
+    }
+
+    .story-char {
+      color: rgba(255, 255, 255, 0.16);
+      transition: color 0.12s linear;
+    }
+
+    .story-char.is-active {
+      color: rgba(255, 255, 255, 1);
+    }
+
+    .products-section {
+      position: relative;
+      padding-right: 0;
+    }
+
+    .products-header {
+      margin-bottom: 14px;
+    }
+
+    .products-header h3 {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .products-header p {
+      font-size: 14px;
+      color: #666;
+      max-width: 700px;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 4px;
+    }
+
+    .product-card {
+      background: #fff;
+    }
+
+    .product-image-link {
+      display: block;
+    }
+
+    .product-image {
+      position: relative;
+      aspect-ratio: 0.78 / 1;
+      overflow: hidden;
+      background: #efefef;
+    }
+
+    .product-image img {
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.35s ease;
+    }
+
+    .product-image-link:hover .product-image img {
+      transform: scale(1.03);
+    }
+
+    .product-tag {
+      position: absolute;
+      left: 10px;
+      bottom: 10px;
+      padding: 3px 6px;
+      background: rgba(0, 0, 0, 0.58);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 400;
+      border-radius: 3px;
+    }
+
+    .product-body {
+      padding: 10px 4px 18px;
+    }
+
+    .product-title-row {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+
+    .product-title {
+      font-size: 13px;
+      font-weight: 400;
+      color: #111;
+    }
+
+    .product-price {
+      font-size: 13px;
+      color: #444;
+      margin-bottom: 10px;
+    }
+
+    .product-desc {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 12px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .product-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .shop-link,
+    .add-btn {
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .shop-link {
+      border: 1px solid #d9d9d9;
+      color: #444;
+      flex: 1;
+    }
+
+    .add-btn {
+      background: #111;
+      color: #fff;
+      flex: 1;
+    }
+
+    .cart-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(17, 17, 17, 0.42);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 300;
+      padding: 20px;
+    }
+
+    .cart-modal.is-open {
+      display: flex;
+    }
+
+    .cart-modal-panel {
+      width: min(960px, 100%);
+      max-height: min(88vh, 860px);
+      background: #fff;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+    }
+
+    .cart-modal-visual {
+      background: #111;
+      color: #fff;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 560px;
+    }
+
+    .cart-modal-label {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.68);
+      letter-spacing: 0.08em;
+      margin-bottom: 14px;
+    }
+
+    .cart-modal-visual h3 {
+      font-size: clamp(26px, 3vw, 40px);
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    .cart-modal-visual p {
+      max-width: 420px;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.76);
+    }
+
+    .cart-modal-visual-box {
+      border-top: 1px solid rgba(255, 255, 255, 0.14);
+      padding-top: 16px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .cart-modal-visual-stat {
+      background: rgba(255, 255, 255, 0.06);
+      padding: 16px;
+    }
+
+    .cart-modal-visual-stat span {
+      display: block;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.66);
+      margin-bottom: 6px;
+    }
+
+    .cart-modal-visual-stat strong {
+      display: block;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.04em;
+    }
+
+    .cart-modal-checkout {
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      min-height: 560px;
+    }
+
+    .cart-modal-header {
+      padding: 18px 20px;
+      border-bottom: 1px solid #efefef;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .cart-modal-header h4 {
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .cart-close-btn {
+      min-width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      background: #f3f3f3;
+      color: #333;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .cart-body {
+      padding: 14px 20px 18px;
+      overflow: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 260px;
+      flex: 1;
+    }
+
+    .cart-empty {
+      background: #f7f4ef;
+      color: #777;
+      padding: 16px;
+      font-size: 13px;
+    }
+
+    .cart-item {
+      display: grid;
+      grid-template-columns: 56px 1fr auto;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .cart-thumb {
+      width: 56px;
+      height: 72px;
+      overflow: hidden;
+      background: #efefef;
+    }
+
+    .cart-thumb img {
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .cart-item-title {
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .cart-item-sub {
+      font-size: 11px;
+      color: #777;
+    }
+
+    .cart-item-price {
+      font-size: 12px;
+      color: #333;
+      white-space: nowrap;
+    }
+
+    .cart-summary {
+      border-top: 1px solid #efefef;
+      padding: 14px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      font-size: 13px;
+      color: #555;
+    }
+
+    .summary-row.total {
+      font-size: 18px;
+      color: #111;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+    }
+
+    .cart-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .clear-btn,
+    .checkout-btn {
+      min-height: 40px;
+      border-radius: 999px;
+      font-size: 12px;
+    }
+
+    .clear-btn {
+      background: #f3f3f3;
+      color: #333;
+    }
+
+    .checkout-btn {
+      background: #111;
+      color: #fff;
+    }
+
+    .checkout-message {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #111;
+      color: #fff;
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 40px;
+    }
+
+    .checkout-message.is-show {
+      display: flex;
+    }
+
+    .checkout-message-content {
+      max-width: 760px;
+      font-size: clamp(26px, 3.2vw, 42px);
+      line-height: 1.4;
+      font-weight: 600;
+      letter-spacing: -0.04em;
+      margin-bottom: 32px;
+    }
+
+    .checkout-cta {
+      padding: 12px 20px;
+      border-radius: 999px;
+      background: #fff;
+      color: #111;
+      font-size: 13px;
+    }
+
+    @media (max-width: 1200px) {
+      .cart-modal-panel {
+        width: min(920px, 100%);
+      }
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .warning-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .campaign-grid,
+      .warning-stats,
+      .product-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+            .cart-modal-panel {
+        grid-template-columns: 1fr;
+        max-height: min(92vh, 960px);
+      }
+
+      .cart-modal-visual,
+      .cart-modal-checkout {
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page-shell,
+      .header-inner {
+        width: min(100% - 20px, 1400px);
+      }
+
+      .header-inner {
+        min-height: 56px;
+      }
+
+      .header-nav {
+        gap: 12px;
+      }
+
+      .hero {
+        margin-bottom: 48px;
+      }
+
+      .hero-copy,
+      .warning-copy,
+      .campaign-card {
+        padding: 18px;
+      }
+
+      .section-heading,
+      .about-inner {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .campaign-grid,
+      .warning-stats,
+      .product-grid,
+      .cart-actions {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <h1 class="brand">RE:WEAR</h1>
+      <nav class="header-nav">
+        <a href="campaign.html">CAMPAIGN</a>
+        <a href="warning.html">FAST FASHION</a>
+        <a href="index.html#products">SHOP</a>
+      </nav>
+      <button type="button" class="header-cart-button" id="openCartButton">
+        CART <span id="headerCartCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <section class="hero">
+      <div class="hero-media">
+        <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?q=80&w=1200&auto=format&fit=crop" alt="메인 이미지">
+      </div>
+      <div class="hero-copy">
+        <p class="hero-kicker">SECONDHAND CLOTHING CAMPAIGN</p>
+        <h2>익숙한 소비를<br>다르게 입는 방식</h2>
+        <p class="hero-text">
+          패스트패션 소비의 속도를 늦추고, 중고 의류의 가치를 다시 보게 만드는 캠페인형 쇼핑 페이지.
+        </p>
+        <div class="hero-links">
+          <a href="campaign.html">캠페인 설명 보기</a>
+          <a href="warning.html">패스트패션 문제 보기</a>
+          <a href="index.html#products">상품 탐색하기</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section" id="campaignPreview">
+      <div class="section-heading">
+        <p class="section-label">CAMPAIGN</p>
+        <div class="section-title-block">
+          <h3>캠페인 소개는 별도 페이지에서 자세히 확인할 수 있다.</h3>
+          <p>
+            이 메인 페이지에서는 쇼핑 경험을 우선 보여주고, 캠페인의 목적과 구조는 별도 페이지로 이동해 읽도록 분리했다.
+          </p>
+        </div>
+      </div>
+
+      <div class="campaign-grid">
+        <article class="campaign-card">
+          <div>
+            <p class="campaign-card-number">GO</p>
+            <h4>캠페인 소개 페이지</h4>
+            <p>프로그램 목적, 행동 변화 흐름, 기대 효과를 별도 페이지에서 자세히 본다.</p>
+          </div>
+          <div class="hero-links">
+            <a href="campaign.html">campaign.html로 이동</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="content-section" id="warningPreview">
+      <div class="section-heading">
+        <p class="section-label">FAST FASHION</p>
+        <div class="section-title-block">
+          <h3>패스트패션 경각심 콘텐츠도 별도 페이지로 분리할 수 있다.</h3>
+          <p>
+            메시지 전달을 더 강하게 하기 위해 경고성 콘텐츠를 독립된 페이지로 분리하고, 메인에서는 진입 링크만 보여주는 방식이다.
+          </p>
+        </div>
+      </div>
+
+      <div class="campaign-grid">
+        <article class="campaign-card">
+          <div>
+            <p class="campaign-card-number">GO</p>
+            <h4>패스트패션 경각심 페이지</h4>
+            <p>과소비, 폐기, 재사용 필요성을 더 강한 톤으로 전달하는 별도 페이지로 이동한다.</p>
+          </div>
+          <div class="hero-links">
+            <a href="warning.html">warning.html로 이동</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="story-section">
+      <div class="story-sticky">
+        <p class="story-text" id="storyText">
+          우리는 새로운 옷을 더 많이 사는 대신, 이미 존재하는 옷을 다시 선택하는 방식을 제안한다. 빠르게 소비하고 버리는 구조를 멈추고, 더 오래 입고 다시 연결하는 소비를 경험하게 한다.
+        </p>
+      </div>
+    </section>
+
+    <section class="content-section products-section" id="products">
+      <div class="section-heading">
+        <p class="section-label">SHOP</p>
+        <div class="section-title-block">
+          <h3>이미지를 보고 고르고, 카트에 담아 실제 선택처럼 경험한다.</h3>
+          <p>
+            상품 이미지를 클릭하면 실제 중고거래 플랫폼으로 이동할 수 있고, 담기 버튼으로는 캠페인 내 구매 행동 시뮬레이션을 진행할 수 있다.
+          </p>
+        </div>
+      </div>
+
+      <div class="product-grid">
+        <article class="product-card" data-id="1" data-name="오버핏 데님 자켓" data-price="59000" data-image="https://images.unsplash.com/photo-1542272604-787c3835535d?q=80&w=900&auto=format&fit=crop">
+          <a href="https://www.daangn.com/" target="_blank" rel="noopener noreferrer" class="product-image-link">
+            <div class="product-image">
+              <img src="https://images.unsplash.com/photo-1542272604-787c3835535d?q=80&w=900&auto=format&fit=crop" alt="오버핏 데님 자켓">
+              <span class="product-tag">당근마켓</span>
+            </div>
+          </a>
+          <div class="product-body">
+            <div class="product-title-row">
+              <p class="product-title">오버핏 데님 자켓</p>
+            </div>
+            <p class="product-price">59,000원</p>
+            <p class="product-desc">데일리로 오래 입기 좋은 클래식한 핏의 재순환 데님 자켓.</p>
+            <div class="product-actions">
+              
+              <button class="add-btn">담기</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-id="2" data-name="스트라이프 셔츠" data-price="32000" data-image="https://images.unsplash.com/photo-1603252109303-2751441dd157?q=80&w=900&auto=format&fit=crop">
+          <a href="https://web.joongna.com/" target="_blank" rel="noopener noreferrer" class="product-image-link">
+            <div class="product-image">
+              <img src="https://images.unsplash.com/photo-1603252109303-2751441dd157?q=80&w=900&auto=format&fit=crop" alt="스트라이프 셔츠">
+              <span class="product-tag">중고나라</span>
+            </div>
+          </a>
+          <div class="product-body">
+            <div class="product-title-row">
+              <p class="product-title">스트라이프 셔츠</p>
+            </div>
+            <p class="product-price">32,000원</p>
+            <p class="product-desc">가볍고 활용도 높은 패턴 셔츠로 레이어드에 적합한 아이템.</p>
+            <div class="product-actions">
+              
+              <button class="add-btn">담기</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-id="3" data-name="울 니트 가디건" data-price="41000" data-image="https://images.unsplash.com/photo-1434389677669-e08b4cac3105?q=80&w=900&auto=format&fit=crop">
+          <a href="https://m.bunjang.co.kr/" target="_blank" rel="noopener noreferrer" class="product-image-link">
+            <div class="product-image">
+              <img src="https://images.unsplash.com/photo-1434389677669-e08b4cac3105?q=80&w=900&auto=format&fit=crop" alt="울 니트 가디건">
+              <span class="product-tag">번개장터</span>
+            </div>
+          </a>
+          <div class="product-body">
+            <div class="product-title-row">
+              <p class="product-title">울 니트 가디건</p>
+            </div>
+            <p class="product-price">41,000원</p>
+            <p class="product-desc">포근한 질감과 부드러운 실루엣이 돋보이는 가디건.</p>
+            <div class="product-actions">
+              
+              <button class="add-btn">담기</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-id="4" data-name="와이드 팬츠" data-price="36000" data-image="https://images.unsplash.com/photo-1506629905607-bb5b1d5d9c57?q=80&w=900&auto=format&fit=crop">
+          <a href="https://www.daangn.com/" target="_blank" rel="noopener noreferrer" class="product-image-link">
+            <div class="product-image">
+              <img src="https://images.unsplash.com/photo-1506629905607-bb5b1d5d9c57?q=80&w=900&auto=format&fit=crop" alt="와이드 팬츠">
+              <span class="product-tag">당근마켓</span>
+            </div>
+          </a>
+          <div class="product-body">
+            <div class="product-title-row">
+              <p class="product-title">와이드 팬츠</p>
+            </div>
+            <p class="product-price">36,000원</p>
+            <p class="product-desc">편안한 실루엣과 높은 활용도를 가진 미니멀 팬츠.</p>
+            <div class="product-actions">
+              
+              <button class="add-btn">담기</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-id="5" data-name="캔버스 토트백" data-price="21000" data-image="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=900&auto=format&fit=crop">
+          <a href="https://web.joongna.com/" target="_blank" rel="noopener noreferrer" class="product-image-link">
+            <div class="product-image">
+              <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=900&auto=format&fit=crop" alt="캔버스 토트백">
+              <span class="product-tag">중고나라</span>
+            </div>
+          </a>
+          <div class="product-body">
+            <div class="product-title-row">
+              <p class="product-title">캔버스 토트백</p>
+            </div>
+            <p class="product-price">21,000원</p>
+            <p class="product-desc">가볍게 들고 다니기 좋은 실용적인 에코백형 토트백.</p>
+            <div class="product-actions">
+              
+              <button class="add-btn">담기</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-id="6" data-name="레더 로퍼" data-price="47000" data-image="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=900&auto=format&fit=crop">
+          <a href="https://m.bunjang.co.kr/" target="_blank" rel="noopener noreferrer" class="product-image-link">
+            <div class="product-image">
+              <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=900&auto=format&fit=crop" alt="레더 로퍼">
+              <span class="product-tag">번개장터</span>
+            </div>
+          </a>
+          <div class="product-body">
+            <div class="product-title-row">
+              <p class="product-title">레더 로퍼</p>
+            </div>
+            <p class="product-price">47,000원</p>
+            <p class="product-desc">차분한 무드로 스타일을 정리해주는 클래식 로퍼.</p>
+            <div class="product-actions">
+              
+              <button class="add-btn">담기</button>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="cart-modal" id="cartModal" aria-hidden="true">
+        <div class="cart-modal-panel" role="dialog" aria-modal="true" aria-labelledby="cartModalTitle">
+          <div class="cart-modal-visual">
+            <div>
+              <p class="cart-modal-label">SIMULATION CHECKOUT</p>
+              <h3>가상의 결제창에서<br>최종 선택을 확인한다.</h3>
+              <p>
+                이 창은 실제 결제가 아니라, 중고 의류를 선택하고 구매 행동까지 이어지는 캠페인 시뮬레이션을 보여주기 위한 화면이다.
+              </p>
+            </div>
+            <div class="cart-modal-visual-box">
+              <div class="cart-modal-visual-stat">
+                <span>선택 상품 수</span>
+                <strong id="modalSelectedCount">0개</strong>
+              </div>
+              <div class="cart-modal-visual-stat">
+                <span>예상 결제 금액</span>
+                <strong id="modalGrandTotal">0원</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="cart-modal-checkout" id="cartPanel">
+            <div class="cart-modal-header">
+              <h4 id="cartModalTitle">시뮬레이션 결제창</h4>
+              <button type="button" class="cart-close-btn" id="closeCartButton">✕</button>
+            </div>
+
+            <div class="cart-body" id="cartList">
+              <div class="cart-empty">장바구니가 비어 있어요. 새로운 상품으로 채워주세요.</div>
+            </div>
+
+            <div class="cart-summary">
+              <div class="summary-row">
+                <span>선택한 상품 수</span>
+                <strong id="selectedCount">0개</strong>
+              </div>
+              <div class="summary-row total">
+                <span>합계</span>
+                <strong id="grandTotal">0원</strong>
+              </div>
+              <div class="cart-actions">
+                <button class="clear-btn" id="clearBtn">비우기</button>
+                <button class="checkout-btn" id="checkoutBtn">결제하기</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="checkout-message" id="checkoutMessage">
+        <div class="checkout-message-content" id="checkoutMessageContent"></div>
+        <button class="checkout-cta" id="checkoutCloseBtn">다시 탐색하기</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const cart = [];
+    let purchasedCount = 0;
+
+    const cartList = document.getElementById('cartList');
+    const headerCartCount = document.getElementById('headerCartCount');
+    const selectedCount = document.getElementById('selectedCount');
+    const modalSelectedCount = document.getElementById('modalSelectedCount');
+    const grandTotal = document.getElementById('grandTotal');
+    const modalGrandTotal = document.getElementById('modalGrandTotal');
+    const clearBtn = document.getElementById('clearBtn');
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    const checkoutMessage = document.getElementById('checkoutMessage');
+    const checkoutMessageContent = document.getElementById('checkoutMessageContent');
+    const openCartButton = document.getElementById('openCartButton');
+    const checkoutCloseBtn = document.getElementById('checkoutCloseBtn');
+    const closeCartButton = document.getElementById('closeCartButton');
+    const cartModal = document.getElementById('cartModal');
+
+    function formatPrice(value) {
+      return value.toLocaleString('ko-KR') + '원';
+    }
+
+    function getTotal() {
+      return cart.reduce((sum, item) => sum + item.price, 0);
+    }
+
+    function renderCart() {
+      headerCartCount.textContent = cart.length;
+      selectedCount.textContent = cart.length + '개';
+      modalSelectedCount.textContent = cart.length + '개';
+      grandTotal.textContent = formatPrice(getTotal());
+      modalGrandTotal.textContent = formatPrice(getTotal());
+
+      if (cart.length === 0) {
+        cartList.innerHTML = '<div class="cart-empty">장바구니가 비어 있어요. 새로운 상품으로 채워주세요.</div>';
+      } else {
+        cartList.innerHTML = cart.map(item => `
+          <div class="cart-item">
+            <div class="cart-thumb">
+              <img src="${item.image}" alt="${item.name}">
+            </div>
+            <div>
+              <div class="cart-item-title">${item.name}</div>
+              <div class="cart-item-sub">캠페인 선택 시뮬레이션</div>
+            </div>
+            <div class="cart-item-price">${formatPrice(item.price)}</div>
+          </div>
+        `).join('');
+      }
+    }
+
+    document.querySelectorAll('.product-card').forEach(card => {
+      const button = card.querySelector('.add-btn');
+      button.addEventListener('click', () => {
+        const item = {
+          id: card.dataset.id,
+          name: card.dataset.name,
+          price: Number(card.dataset.price),
+          image: card.dataset.image,
+        };
+
+        cart.push(item);
+        checkoutMessage.classList.remove('is-show');
+        renderCart();
+      });
+    });
+
+    clearBtn.addEventListener('click', () => {
+      cart.length = 0;
+      checkoutMessage.classList.remove('is-show');
+      renderCart();
+    });
+
+    checkoutBtn.addEventListener('click', () => {
+      if (cart.length === 0) {
+        checkoutMessage.classList.add('is-show');
+        checkoutMessageContent.textContent = '결제할 상품이 없어요. 먼저 상품을 담아주세요.';
+        return;
+      }
+
+      purchasedCount += cart.length;
+      const total = getTotal();
+      const count = cart.length;
+      cart.length = 0;
+      checkoutMessage.classList.add('is-show');
+      closeCartModal();
+      checkoutMessageContent.textContent = `환경을 위한 선택에 동참해주셔서 감사합니다.
+총 ${count}개의 상품을 ${formatPrice(total)}만큼 선택했어요.
+지금까지 누적 ${purchasedCount}개의 선택이 이어졌습니다.
+당신의 선택이 더 오래 입는 문화를 만듭니다.`;
+      renderCart();
+
+      // 자동 닫힘 제거
+    });
+
+    function openCartModal() {
+      cartModal.classList.add('is-open');
+      cartModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCartModal() {
+      cartModal.classList.remove('is-open');
+      cartModal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    openCartButton.addEventListener('click', openCartModal);
+    closeCartButton.addEventListener('click', closeCartModal);
+
+    cartModal.addEventListener('click', (event) => {
+      if (event.target === cartModal) {
+        closeCartModal();
+      }
+    });
+
+    checkoutCloseBtn.addEventListener('click', () => {
+      checkoutMessage.classList.remove('is-show');
+    });
+
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        closeCartModal();
+      }
+    });
+
+    renderCart();
+
+    const storySection = document.querySelector('.story-section');
+    const storyText = document.getElementById('storyText');
+    const storyOriginalText = storyText ? storyText.textContent.trim() : '';
+
+    if (storyText && storyOriginalText) {
+      storyText.innerHTML = '';
+      Array.from(storyOriginalText).forEach((char) => {
+        const span = document.createElement('span');
+        span.className = 'story-char';
+        span.textContent = char === ' ' ? ' ' : char;
+        storyText.appendChild(span);
+      });
+    }
+
+    function updateStoryOpacity() {
+      if (!storySection || !storyText) return;
+
+      const rect = storySection.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      const sectionEnd = rect.height - windowHeight;
+      const chars = storyText.querySelectorAll('.story-char');
+
+      if (sectionEnd <= 0) {
+        chars.forEach((char) => char.classList.add('is-active'));
+        return;
+      }
+
+      const scrolled = Math.min(Math.max(-rect.top, 0), sectionEnd);
+      const progress = scrolled / sectionEnd;
+      const activeCount = Math.floor(chars.length * progress);
+
+      chars.forEach((char, index) => {
+        if (index < activeCount) {
+          char.classList.add('is-active');
+        } else {
+          char.classList.remove('is-active');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', updateStoryOpacity);
+    window.addEventListener('resize', updateStoryOpacity);
+    window.addEventListener('load', updateStoryOpacity);
+    updateStoryOpacity();
+  </script>
+</body>
+</html>
