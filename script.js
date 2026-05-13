@@ -39,7 +39,7 @@ function renderCart() {
   if (cart.length === 0) {
     cartList.innerHTML = `
       <div class="cart-empty">
-        장바구니가 비어 있어요.
+        장바구니가 비어 있어요. 새로운 상품으로 채워주세요.
       </div>
     `;
     return;
@@ -53,9 +53,7 @@ function renderCart() {
 
       <div>
         <div class="cart-item-title">${item.name}</div>
-        <div class="cart-item-sub">
-          캠페인 선택 시뮬레이션
-        </div>
+        <div class="cart-item-sub">캠페인 선택 시뮬레이션</div>
       </div>
 
       <div class="cart-item-price">
@@ -65,106 +63,144 @@ function renderCart() {
   `).join('');
 }
 
-document.querySelectorAll('.product-card').forEach(card => {
-  const button = card.querySelector('.add-btn');
+function addProductToCart(card) {
+  const item = {
+    id: card.dataset.id,
+    name: card.dataset.name,
+    price: Number(card.dataset.price),
+    image: card.dataset.image,
+  };
 
-  button.addEventListener('click', () => {
-    const item = {
-      id: card.dataset.id,
-      name: card.dataset.name,
-      price: Number(card.dataset.price),
-      image: card.dataset.image,
-    };
-
-    cart.push(item);
-    renderCart();
-  });
-});
-
-clearBtn.addEventListener('click', () => {
-  cart.length = 0;
+  cart.push(item);
+  checkoutMessage.classList.remove('is-show');
   renderCart();
-});
-
-checkoutBtn.addEventListener('click', () => {
-  if (cart.length === 0) return;
-
-  purchasedCount += cart.length;
-
-  const total = getTotal();
-  const count = cart.length;
-
-  cart.length = 0;
-
-  checkoutMessage.classList.add('is-show');
-
-  checkoutMessageContent.textContent =
-`환경을 위한 선택에 동참해주셔서 감사합니다.
-총 ${count}개의 상품을 ${formatPrice(total)}만큼 선택했어요.
-지금까지 누적 ${purchasedCount}개의 선택이 이어졌습니다.
-당신의 선택이 더 오래 입는 문화를 만듭니다.`;
-
-  closeCartModal();
-  renderCart();
-});
+}
 
 function openCartModal() {
   cartModal.classList.add('is-open');
+  cartModal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
 }
 
 function closeCartModal() {
   cartModal.classList.remove('is-open');
+  cartModal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
 }
 
-openCartButton.addEventListener('click', openCartModal);
-closeCartButton.addEventListener('click', closeCartModal);
+function showCheckoutMessage(message) {
+  checkoutMessageContent.textContent = message;
+  checkoutMessage.classList.add('is-show');
+}
 
-checkoutCloseBtn.addEventListener('click', () => {
-  checkoutMessage.classList.remove('is-show');
-});
+function setupCartEvents() {
+  document.querySelectorAll('.product-card').forEach(card => {
+    const button = card.querySelector('.add-btn');
+
+    button.addEventListener('click', () => {
+      addProductToCart(card);
+    });
+  });
+
+  clearBtn.addEventListener('click', () => {
+    cart.length = 0;
+    checkoutMessage.classList.remove('is-show');
+    renderCart();
+  });
+
+  checkoutBtn.addEventListener('click', () => {
+    if (cart.length === 0) {
+      showCheckoutMessage('결제할 상품이 없어요. 먼저 상품을 담아주세요.');
+      return;
+    }
+
+    purchasedCount += cart.length;
+
+    const total = getTotal();
+    const count = cart.length;
+
+    cart.length = 0;
+
+    closeCartModal();
+
+    showCheckoutMessage(
+`환경을 위한 선택에 동참해주셔서 감사합니다.
+총 ${count}개의 상품을 ${formatPrice(total)}만큼 선택했어요.
+지금까지 누적 ${purchasedCount}개의 선택이 이어졌습니다.
+당신의 선택이 더 오래 입는 문화를 만듭니다.`
+    );
+
+    renderCart();
+  });
+
+  openCartButton.addEventListener('click', openCartModal);
+  closeCartButton.addEventListener('click', closeCartModal);
+
+  cartModal.addEventListener('click', event => {
+    if (event.target === cartModal) {
+      closeCartModal();
+    }
+  });
+
+  checkoutCloseBtn.addEventListener('click', () => {
+    checkoutMessage.classList.remove('is-show');
+    document.body.style.overflow = '';
+  });
+
+  window.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      closeCartModal();
+      checkoutMessage.classList.remove('is-show');
+      document.body.style.overflow = '';
+    }
+  });
+}
 
 const storySection = document.querySelector('.story-section');
 const storyText = document.getElementById('storyText');
 
-const storyOriginalText = storyText.textContent.trim();
+function setupStoryText() {
+  if (!storySection || !storyText) return;
 
-storyText.innerHTML = '';
+  const storyOriginalText = storyText.textContent.trim();
 
-Array.from(storyOriginalText).forEach(char => {
-  const span = document.createElement('span');
+  storyText.innerHTML = '';
 
-  span.className = 'story-char';
-  span.textContent = char === ' ' ? '\u00A0' : char;
-
-  storyText.appendChild(span);
-});
-
-function updateStoryOpacity() {
-  const rect = storySection.getBoundingClientRect();
-  const windowHeight = window.innerHeight;
-
-  const sectionEnd = rect.height - windowHeight;
-
-  const chars = storyText.querySelectorAll('.story-char');
-
-  const scrolled = Math.min(
-    Math.max(-rect.top, 0),
-    sectionEnd
-  );
-
-  const progress = scrolled / sectionEnd;
-
-  const activeCount = Math.floor(chars.length * progress);
-
-  chars.forEach((char, index) => {
-    char.classList.toggle(
-      'is-active',
-      index < activeCount
-    );
+  Array.from(storyOriginalText).forEach(char => {
+    const span = document.createElement('span');
+    span.className = 'story-char';
+    span.textContent = char === ' ' ? '\u00A0' : char;
+    storyText.appendChild(span);
   });
 }
 
+function updateStoryOpacity() {
+  if (!storySection || !storyText) return;
+
+  const rect = storySection.getBoundingClientRect();
+  const windowHeight = window.innerHeight;
+  const sectionEnd = rect.height - windowHeight;
+  const chars = storyText.querySelectorAll('.story-char');
+
+  if (sectionEnd <= 0) {
+    chars.forEach(char => char.classList.add('is-active'));
+    return;
+  }
+
+  const scrolled = Math.min(Math.max(-rect.top, 0), sectionEnd);
+  const progress = scrolled / sectionEnd;
+  const activeCount = Math.floor(chars.length * progress);
+
+  chars.forEach((char, index) => {
+    char.classList.toggle('is-active', index < activeCount);
+  });
+}
+
+setupCartEvents();
+setupStoryText();
+
 window.addEventListener('scroll', updateStoryOpacity);
+window.addEventListener('resize', updateStoryOpacity);
 
 renderCart();
 updateStoryOpacity();
