@@ -1,6 +1,17 @@
 const cart = [];
 let purchasedCount = 0;
 
+const toast = document.getElementById("toast");
+
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2000);
+}
+
 const cartList = document.getElementById('cartList');
 const headerCartCount = document.getElementById('headerCartCount');
 const selectedCount = document.getElementById('selectedCount');
