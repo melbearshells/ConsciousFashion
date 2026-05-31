@@ -623,7 +623,6 @@ img {
   visibility: visible;
 }
 
-
 @media (max-width: 980px) {
   .hero {
     grid-template-columns: 1fr;
