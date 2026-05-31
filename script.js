@@ -1,38 +1,42 @@
 const cart = [];
 let purchasedCount = 0;
+let toastTimer = null;
 
 const toast = document.getElementById("toast");
 
 function showToast(message) {
+  if (!toast) return;
+
   toast.textContent = message;
   toast.classList.add("show");
 
-  setTimeout(() => {
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
     toast.classList.remove("show");
-  }, 2000);
+  }, 1800);
 }
 
-const cartList = document.getElementById('cartList');
-const headerCartCount = document.getElementById('headerCartCount');
-const selectedCount = document.getElementById('selectedCount');
-const modalSelectedCount = document.getElementById('modalSelectedCount');
-const grandTotal = document.getElementById('grandTotal');
-const modalGrandTotal = document.getElementById('modalGrandTotal');
+const cartList = document.getElementById("cartList");
+const headerCartCount = document.getElementById("headerCartCount");
+const selectedCount = document.getElementById("selectedCount");
+const modalSelectedCount = document.getElementById("modalSelectedCount");
+const grandTotal = document.getElementById("grandTotal");
+const modalGrandTotal = document.getElementById("modalGrandTotal");
 
-const clearBtn = document.getElementById('clearBtn');
-const checkoutBtn = document.getElementById('checkoutBtn');
+const clearBtn = document.getElementById("clearBtn");
+const checkoutBtn = document.getElementById("checkoutBtn");
 
-const checkoutMessage = document.getElementById('checkoutMessage');
-const checkoutMessageContent = document.getElementById('checkoutMessageContent');
+const checkoutMessage = document.getElementById("checkoutMessage");
+const checkoutMessageContent = document.getElementById("checkoutMessageContent");
 
-const openCartButton = document.getElementById('openCartButton');
-const closeCartButton = document.getElementById('closeCartButton');
-const checkoutCloseBtn = document.getElementById('checkoutCloseBtn');
+const openCartButton = document.getElementById("openCartButton");
+const closeCartButton = document.getElementById("closeCartButton");
+const checkoutCloseBtn = document.getElementById("checkoutCloseBtn");
 
-const cartModal = document.getElementById('cartModal');
+const cartModal = document.getElementById("cartModal");
 
 function formatPrice(value) {
-  return value.toLocaleString('ko-KR') + '원';
+  return value.toLocaleString("ko-KR") + "원";
 }
 
 function getTotal() {
@@ -41,8 +45,8 @@ function getTotal() {
 
 function renderCart() {
   headerCartCount.textContent = cart.length;
-  selectedCount.textContent = cart.length + '개';
-  modalSelectedCount.textContent = cart.length + '개';
+  selectedCount.textContent = cart.length + "개";
+  modalSelectedCount.textContent = cart.length + "개";
 
   grandTotal.textContent = formatPrice(getTotal());
   modalGrandTotal.textContent = formatPrice(getTotal());
@@ -61,17 +65,15 @@ function renderCart() {
       <div class="cart-thumb">
         <img src="${item.image}" alt="${item.name}">
       </div>
-
       <div>
         <div class="cart-item-title">${item.name}</div>
         <div class="cart-item-sub">캠페인 선택 시뮬레이션</div>
       </div>
-
       <div class="cart-item-price">
         ${formatPrice(item.price)}
       </div>
     </div>
-  `).join('');
+  `).join("");
 }
 
 function addProductToCart(card) {
@@ -83,45 +85,48 @@ function addProductToCart(card) {
   };
 
   cart.push(item);
-  checkoutMessage.classList.remove('is-show');
+  checkoutMessage.classList.remove("is-show");
   renderCart();
 }
 
 function openCartModal() {
-  cartModal.classList.add('is-open');
-  cartModal.setAttribute('aria-hidden', 'false');
-  document.body.style.overflow = 'hidden';
+  cartModal.classList.add("is-open");
+  cartModal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
 }
 
 function closeCartModal() {
-  cartModal.classList.remove('is-open');
-  cartModal.setAttribute('aria-hidden', 'true');
-  document.body.style.overflow = '';
+  cartModal.classList.remove("is-open");
+  cartModal.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
 }
 
 function showCheckoutMessage(message) {
   checkoutMessageContent.textContent = message;
-  checkoutMessage.classList.add('is-show');
+  checkoutMessage.classList.add("is-show");
 }
 
 function setupCartEvents() {
-  document.querySelectorAll('.product-card').forEach(card => {
-    const button = card.querySelector('.add-btn');
+  document.querySelectorAll(".product-card").forEach(card => {
+    const button = card.querySelector(".add-btn");
 
-    button.addEventListener('click', () => {
+    if (!button) return;
+
+    button.addEventListener("click", () => {
       addProductToCart(card);
+      showToast("상품을 장바구니에 담았습니다.");
     });
   });
 
-  clearBtn.addEventListener('click', () => {
+  clearBtn.addEventListener("click", () => {
     cart.length = 0;
-    checkoutMessage.classList.remove('is-show');
+    checkoutMessage.classList.remove("is-show");
     renderCart();
   });
 
-  checkoutBtn.addEventListener('click', () => {
+  checkoutBtn.addEventListener("click", () => {
     if (cart.length === 0) {
-      showCheckoutMessage('결제할 상품이 없어요. 먼저 상품을 담아주세요.');
+      showCheckoutMessage("결제할 상품이 없어요. 먼저 상품을 담아주세요.");
       return;
     }
 
@@ -144,43 +149,43 @@ function setupCartEvents() {
     renderCart();
   });
 
-  openCartButton.addEventListener('click', openCartModal);
-  closeCartButton.addEventListener('click', closeCartModal);
+  openCartButton.addEventListener("click", openCartModal);
+  closeCartButton.addEventListener("click", closeCartModal);
 
-  cartModal.addEventListener('click', event => {
+  cartModal.addEventListener("click", event => {
     if (event.target === cartModal) {
       closeCartModal();
     }
   });
 
-  checkoutCloseBtn.addEventListener('click', () => {
-    checkoutMessage.classList.remove('is-show');
-    document.body.style.overflow = '';
+  checkoutCloseBtn.addEventListener("click", () => {
+    checkoutMessage.classList.remove("is-show");
+    document.body.style.overflow = "";
   });
 
-  window.addEventListener('keydown', event => {
-    if (event.key === 'Escape') {
+  window.addEventListener("keydown", event => {
+    if (event.key === "Escape") {
       closeCartModal();
-      checkoutMessage.classList.remove('is-show');
-      document.body.style.overflow = '';
+      checkoutMessage.classList.remove("is-show");
+      document.body.style.overflow = "";
     }
   });
 }
 
-const storySection = document.querySelector('.story-section');
-const storyText = document.getElementById('storyText');
+const storySection = document.querySelector(".story-section");
+const storyText = document.getElementById("storyText");
 
 function setupStoryText() {
   if (!storySection || !storyText) return;
 
   const storyOriginalText = storyText.textContent.trim();
 
-  storyText.innerHTML = '';
+  storyText.innerHTML = "";
 
   Array.from(storyOriginalText).forEach(char => {
-    const span = document.createElement('span');
-    span.className = 'story-char';
-    span.textContent = char === ' ' ? '\u00A0' : char;
+    const span = document.createElement("span");
+    span.className = "story-char";
+    span.textContent = char === " " ? "\u00A0" : char;
     storyText.appendChild(span);
   });
 }
@@ -191,10 +196,10 @@ function updateStoryOpacity() {
   const rect = storySection.getBoundingClientRect();
   const windowHeight = window.innerHeight;
   const sectionEnd = rect.height - windowHeight;
-  const chars = storyText.querySelectorAll('.story-char');
+  const chars = storyText.querySelectorAll(".story-char");
 
   if (sectionEnd <= 0) {
-    chars.forEach(char => char.classList.add('is-active'));
+    chars.forEach(char => char.classList.add("is-active"));
     return;
   }
 
@@ -203,15 +208,15 @@ function updateStoryOpacity() {
   const activeCount = Math.floor(chars.length * progress);
 
   chars.forEach((char, index) => {
-    char.classList.toggle('is-active', index < activeCount);
+    char.classList.toggle("is-active", index < activeCount);
   });
 }
 
 setupCartEvents();
 setupStoryText();
 
-window.addEventListener('scroll', updateStoryOpacity);
-window.addEventListener('resize', updateStoryOpacity);
+window.addEventListener("scroll", updateStoryOpacity);
+window.addEventListener("resize", updateStoryOpacity);
 
 renderCart();
 updateStoryOpacity();
