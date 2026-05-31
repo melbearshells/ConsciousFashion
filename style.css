@@ -593,6 +593,33 @@ img {
   font-size: 13px;
 }
 
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  background: #111;
+  color: #fff;
+
+  padding: 12px 20px;
+  border-radius: 999px;
+
+  font-size: 14px;
+  z-index: 9999;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition: opacity 0.3s ease;
+}
+
+.toast.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+
 @media (max-width: 980px) {
   .hero {
     grid-template-columns: 1fr;
