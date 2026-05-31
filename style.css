@@ -167,6 +167,7 @@ img {
   font-size: clamp(30px, 4.5vw, 62px);
   line-height: 1.24;
   font-weight: 600;
+  text-align: center;
 }
 
 .story-char {
