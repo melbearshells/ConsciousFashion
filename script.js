@@ -173,6 +173,7 @@ function setupCartEvents() {
   const url =
     `${formUrl}?usp=pp_url` +
     `&entry.1579233342=${encodeURIComponent(lastCheckoutAmount)}` +
+    `&entry.1956683407=${encodeURIComponent(lastCheckoutItems.length)}` +
     `&entry.1605307871=${encodeURIComponent(lastCheckoutItems.join(", "))}`;
 
   window.open(url, "_blank");
@@ -238,22 +239,3 @@ window.addEventListener("resize", updateStoryOpacity);
 
 renderCart();
 updateStoryOpacity();
-
-if (checkoutCloseBtn) {
-  checkoutCloseBtn.addEventListener("click", event => {
-  event.preventDefault();
-
-  const formUrl =
-    "https://docs.google.com/forms/d/e/1FAIpQLSdmxSheTuVGWpXg1VC1zOUWDbNnlE4RgwT5wCCnJ6qfb3f1SA/viewform";
-
-  const url =
-    `${formUrl}?usp=pp_url` +
-    `&entry.1579233342=${encodeURIComponent(lastCheckoutAmount)}` +
-    `&entry.1956683407=${encodeURIComponent(lastCheckoutItems.length)}` +
-    `&entry.1605307871=${encodeURIComponent(lastCheckoutItems.join(", "))}`;
-
-  window.open(url, "_blank");
-
-  checkoutMessage.classList.remove("is-show");
-  document.body.style.overflow = "";
-});
