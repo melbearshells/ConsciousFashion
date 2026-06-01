@@ -1,3 +1,6 @@
+let lastCheckoutAmount = 0;
+let lastCheckoutItems = [];
+
 const cart = [];
 let purchasedCount = 0;
 let toastTimer = null;
@@ -135,6 +138,9 @@ function setupCartEvents() {
     const total = getTotal();
     const count = cart.length;
 
+    lastCheckoutAmount = total;
+    lastCheckoutItems = cart.map(item => item.name);
+
     cart.length = 0;
 
     closeCartModal();
@@ -158,10 +164,22 @@ function setupCartEvents() {
     }
   });
 
-  checkoutCloseBtn.addEventListener("click", () => {
-    checkoutMessage.classList.remove("is-show");
-    document.body.style.overflow = "";
+  checkoutCloseBtn.addEventListener("click", event => {
+  event.preventDefault();
+
+  const formUrl =
+    "https://docs.google.com/forms/d/e/1FAIpQLSdmxSheTuVGWpXg1VC1zOUWDbNnlE4RgwT5wCCnJ6qfb3f1SA/viewform";
+
+  const params = new URLSearchParams({
+    "entry.1579233342": lastCheckoutAmount,
+    "entry.1605307871": lastCheckoutItems.join(", ")
   });
+
+  window.open(`${formUrl}?${params.toString()}`, "_blank");
+
+  checkoutMessage.classList.remove("is-show");
+  document.body.style.overflow = "";
+});
 
   window.addEventListener("keydown", event => {
     if (event.key === "Escape") {
