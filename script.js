@@ -240,7 +240,9 @@ renderCart();
 updateStoryOpacity();
 
 if (checkoutCloseBtn) {
-  checkoutCloseBtn.addEventListener("click", () => {
+  checkoutCloseBtn.addEventListener("click", event => {
+  event.preventDefault();
+
   const formUrl =
     "https://docs.google.com/forms/d/e/1FAIpQLSdmxSheTuVGWpXg1VC1zOUWDbNnlE4RgwT5wCCnJ6qfb3f1SA/viewform";
 
@@ -250,10 +252,8 @@ if (checkoutCloseBtn) {
     `&entry.1956683407=${encodeURIComponent(lastCheckoutItems.length)}` +
     `&entry.1605307871=${encodeURIComponent(lastCheckoutItems.join(", "))}`;
 
-  checkoutCloseBtn.href = url;
-});
+  window.open(url, "_blank");
 
-    checkoutMessage.classList.remove("is-show");
-    document.body.style.overflow = "";
-  });
-}
+  checkoutMessage.classList.remove("is-show");
+  document.body.style.overflow = "";
+});
