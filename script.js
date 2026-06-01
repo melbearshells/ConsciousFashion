@@ -241,15 +241,17 @@ updateStoryOpacity();
 
 if (checkoutCloseBtn) {
   checkoutCloseBtn.addEventListener("click", () => {
-    const formUrl =
-      "https://docs.google.com/forms/d/e/1FAIpQLSdmxSheTuVGWpXg1VC1zOUWDbNnlE4RgwT5wCCnJ6qfb3f1SA/viewform";
+  const formUrl =
+    "https://docs.google.com/forms/d/e/1FAIpQLSdmxSheTuVGWpXg1VC1zOUWDbNnlE4RgwT5wCCnJ6qfb3f1SA/viewform";
 
-    const url =
-      `${formUrl}?usp=pp_url` +
-      `&entry.1579233342=${encodeURIComponent(lastCheckoutAmount)}` +
-      `&entry.1605307871=${encodeURIComponent(lastCheckoutItems.join(", "))}`;
+  const url =
+    `${formUrl}?usp=pp_url` +
+    `&entry.1579233342=${encodeURIComponent(lastCheckoutAmount)}` +
+    `&entry.1956683407=${encodeURIComponent(lastCheckoutItems.length)}` +
+    `&entry.1605307871=${encodeURIComponent(lastCheckoutItems.join(", "))}`;
 
-    checkoutCloseBtn.href = url;
+  checkoutCloseBtn.href = url;
+});
 
     checkoutMessage.classList.remove("is-show");
     document.body.style.overflow = "";
